@@ -64,41 +64,40 @@
         request.send(postData);
     }
 
+    Node.prototype.find = function(query) {
+        return this.querySelectorAll(query);
+    }
+
+    // TODO: create a way to correctly do `NodeList.prototype.find`
+    Node.prototype.ready = function(listener) {
+        this.addEventListener('DOMContentLoaded', listener);
+    }
+
+    Node.prototype.on = function(type, listener) {
+        this.addEventListener(type, listener);
+    }
+
+    NodeList.prototype.on = function(type, listener) {
+        this.forEach(function(element) {
+            element.addEventListener(type, listener);
+        });
+    }
+
+    Node.prototype.off = function(type, listener) {
+        this.removeEventListener(type, listener);
+    }
+
+    NodeList.prototype.off = function(type, listener) {
+        this.forEach(function(element) {
+            element.removeEventListener(type, listener);
+        });
+    }
+
+    NodeList.prototype.each = function(callBack) {
+        this.forEach(function(element) {
+            callBack.call(element);
+        });
+    }
+
     global.philote = philote;
 })(this);
-
-Node.prototype.find = function(query) {
-    return this.querySelectorAll(query);
-}
-
-// TODO: create a way to correctly do `NodeList.prototype.find`
-
-Node.prototype.ready = function(listener) {
-    this.addEventListener('DOMContentLoaded', listener);
-}
-
-Node.prototype.on = function(type, listener) {
-    this.addEventListener(type, listener);
-}
-
-NodeList.prototype.on = function(type, listener) {
-    this.forEach(function(element) {
-        element.addEventListener(type, listener);
-    });
-}
-
-Node.prototype.off = function(type, listener) {
-    this.removeEventListener(type, listener);
-}
-
-NodeList.prototype.off = function(type, listener) {
-    this.forEach(function(element) {
-        element.removeEventListener(type, listener);
-    });
-}
-
-NodeList.prototype.each = function(callBack) {
-    this.forEach(function(element) {
-        callBack.call(element);
-    });
-}
