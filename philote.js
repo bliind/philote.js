@@ -1,5 +1,5 @@
-(function (global) {
-    var philote = function (query) {
+(function(global) {
+    var philote = function(query) {
         if (query.indexOf('#') === 0) {
             var result = document.querySelector(query);
             if (result === null) {
@@ -12,7 +12,7 @@
         return result;
     }
 
-    philote.parameterize = function (object) {
+    philote.parameterize = function(object) {
         var parameters = [];
 
         for (var property in object) {
@@ -24,10 +24,10 @@
         return parameters.join('&');
     }
 
-    philote.ajax = function (data) {
+    philote.ajax = function(data) {
         var request = new XMLHttpRequest();
 
-        request.onreadystatechange = function () {
+        request.onreadystatechange = function() {
             if (request.readyState == XMLHttpRequest.DONE ) {
                if (request.status >= 200 <= 399) {
                    if (typeof data.success === 'function') {
@@ -67,32 +67,38 @@
     global.philote = philote;
 })(this);
 
-Node.prototype.ready = function (listener) {
+Node.prototype.find = function(query) {
+    return this.querySelectorAll(query);
+}
+
+// TODO: create a way to correctly do `NodeList.prototype.find`
+
+Node.prototype.ready = function(listener) {
     this.addEventListener('DOMContentLoaded', listener);
 }
 
-Node.prototype.on = function (type, listener) {
+Node.prototype.on = function(type, listener) {
     this.addEventListener(type, listener);
 }
 
-NodeList.prototype.on = function (type, listener) {
-    this.forEach(function (element) {
+NodeList.prototype.on = function(type, listener) {
+    this.forEach(function(element) {
         element.addEventListener(type, listener);
     });
 }
 
-Node.prototype.off = function (type, listener) {
+Node.prototype.off = function(type, listener) {
     this.removeEventListener(type, listener);
 }
 
-NodeList.prototype.off = function (type, listener) {
-    this.forEach(function (element) {
+NodeList.prototype.off = function(type, listener) {
+    this.forEach(function(element) {
         element.removeEventListener(type, listener);
     });
 }
 
-NodeList.prototype.each = function (callBack) {
-    this.forEach(function (element) {
+NodeList.prototype.each = function(callBack) {
+    this.forEach(function(element) {
         callBack.call(element);
     });
 }
