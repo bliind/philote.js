@@ -77,16 +77,6 @@ NodeList.prototype.ready = function (listener) {
     });
 }
 
-Node.prototype.each = function (callBack) {
-    callBack.call(this);
-}
-
-NodeList.prototype.each = function (callBack) {
-    this.forEach(function (element) {
-        callBack.call(element);
-    });
-}
-
 Node.prototype.on = function (type, listener) {
     this.addEventListener(type, listener);
 }
@@ -104,5 +94,15 @@ Node.prototype.off = function (type, listener) {
 NodeList.prototype.off = function (type, listener) {
     this.forEach(function (element) {
         element.removeEventListener(type, listener);
+    });
+}
+
+Node.prototype.each = function (callBack) {
+    callBack.call(this);
+}
+
+NodeList.prototype.each = function (callBack) {
+    this.forEach(function (element) {
+        callBack.call(element);
     });
 }
