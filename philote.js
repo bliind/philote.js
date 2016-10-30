@@ -18,10 +18,10 @@
         for (var property in object) {
             var key = encodeURIComponent(property);
             var value = encodeURIComponent(object[property]);
-            parameters.push(key + "=" + value);
+            parameters.push(key + '=' + value);
         }
 
-        return parameters.join("&");
+        return parameters.join('&');
     }
 
     philote.ajax = function (data) {
@@ -57,7 +57,7 @@
             var postData = data.data;
         } else {
             var postData = philote.parameterize(data.data);
-            request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         }
 
         request.open(data.method, data.url);
@@ -69,12 +69,6 @@
 
 Node.prototype.ready = function (listener) {
     this.addEventListener('DOMContentLoaded', listener);
-}
-
-NodeList.prototype.ready = function (listener) {
-    this.forEach(function (element) {
-        element.addEventListener('DOMContentLoaded', listener);
-    });
 }
 
 Node.prototype.on = function (type, listener) {
@@ -95,10 +89,6 @@ NodeList.prototype.off = function (type, listener) {
     this.forEach(function (element) {
         element.removeEventListener(type, listener);
     });
-}
-
-Node.prototype.each = function (callBack) {
-    callBack.call(this);
 }
 
 NodeList.prototype.each = function (callBack) {
