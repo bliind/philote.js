@@ -29,7 +29,7 @@
 
         request.onreadystatechange = function () {
             if (request.readyState == XMLHttpRequest.DONE ) {
-               if (request.status >= 200 <= 299) {
+               if (request.status >= 200 <= 399) {
                    if (typeof data.success === 'function') {
                        data.success(request.responseText);
                    }
@@ -66,6 +66,16 @@
 
     global.philote = philote;
 })(this);
+
+Node.prototype.ready = function (listener) {
+    this.addEventListener('DOMContentLoaded', listener);
+}
+
+NodeList.prototype.ready = function (listener) {
+    this.forEach(function (element) {
+        element.addEventListener('DOMContentLoaded', listener);
+    });
+}
 
 Node.prototype.each = function (callBack) {
     callBack.call(this);
