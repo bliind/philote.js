@@ -64,11 +64,45 @@
         request.send(postData);
     }
 
+    Node.prototype.addClass = function(newClasses) {
+        var element = this;
+        var newClassList = newClasses.split(' ');
+        newClassList.forEach(function(newClass) {
+            element.classList.add(newClass);
+        });
+    }
+
+    NodeList.prototype.addClass = function(newClasses) {
+        var newClassList = newClasses.split(' ');
+        this.forEach(function(element) {
+            newClassList.forEach(function(newClass) {
+                element.classlist.add(newClass);
+            });
+        });
+    }
+
+    Node.prototype.removeClass = function(newClasses) {
+        var element = this;
+        var newClassList = newClasses.split(' ');
+        newClassList.forEach(function(newClass) {
+            element.classList.remove(newClass);
+        });
+    }
+
+    NodeList.prototype.removeClass = function(newClasses) {
+        var newClassList = newClasses.split(' ');
+        this.forEach(function(element) {
+            newClassList.forEach(function(newClass) {
+                element.classlist.remove(newClass);
+            });
+        });
+    }
+
+    // TODO: 
     Node.prototype.find = function(query) {
         return this.querySelectorAll(query);
     }
 
-    // TODO: create a way to correctly do `NodeList.prototype.find`
     Node.prototype.ready = function(listener) {
         this.addEventListener('DOMContentLoaded', listener);
     }
