@@ -6,22 +6,33 @@
                 console.error('Did not find node matching: ' + query);
             }
         } else {
-            var result = document.querySelectorAll(query)
+            var nodeList = document.querySelectorAll(query);
+            var result = philote.nodeListToArray(nodeList);
         }
 
         return result;
     }
 
+    philote.nodeListToArray = function(nodeList) {
+        var array = [];
+        nodeList.forEach(function(node) {
+            array.push(node);
+        });
+
+        return array;
+    }
+
     philote.parameterize = function(object) {
         var parameters = [];
-
         for (var property in object) {
             var key = encodeURIComponent(property);
             var value = encodeURIComponent(object[property]);
             parameters.push(key + '=' + value);
         }
 
-        return parameters.join('&');
+        var parametersString = parameters.join('&');
+
+        return parametersString;
     }
 
     philote.ajax = function(data) {
@@ -64,43 +75,65 @@
         request.send(postData);
     }
 
-    Node.prototype.addClass = function(newClasses) {
-        var element = this;
-        var newClassList = newClasses.split(' ');
-        newClassList.forEach(function(newClass) {
-            element.classList.add(newClass);
+    Array.prototype.each = function(callback) {
+        this.forEach(function(node) {
+            callback.call(node);
         });
     }
 
-    NodeList.prototype.addClass = function(newClasses) {
+    Node.prototype.find = function(query) {
+        var nodeList = this.querySelectorAll(query);
+
+        return philote.nodeListToArray(nodeList);
+    }
+
+    Array.prototype.find = function(query) {
+        var results = [];
+
+        this.forEach(function(node) {
+            var newNodes = node.querySelectorAll(query);
+            newNodes.forEach(function(foundNode) {
+                if (results.indexOf(foundNode) === -1) {
+                    results.push(foundNode);
+                }
+            });
+        });
+
+        return results;
+    }
+
+    Node.prototype.addClass = function(classes) {
+        var node = this;
+        var classesList = classes.split(' ');
+        classesList.forEach(function(newClass) {
+            node.classList.add(newClass);
+        });
+    }
+
+    Array.prototype.addClass = function(newClasses) {
         var newClassList = newClasses.split(' ');
-        this.forEach(function(element) {
+        this.forEach(function(node) {
             newClassList.forEach(function(newClass) {
-                element.classlist.add(newClass);
+                node.classList.add(newClass);
             });
         });
     }
 
     Node.prototype.removeClass = function(newClasses) {
-        var element = this;
+        var node = this;
         var newClassList = newClasses.split(' ');
         newClassList.forEach(function(newClass) {
-            element.classList.remove(newClass);
+            node.classList.remove(newClass);
         });
     }
 
-    NodeList.prototype.removeClass = function(newClasses) {
+    Array.prototype.removeClass = function(newClasses) {
         var newClassList = newClasses.split(' ');
-        this.forEach(function(element) {
+        this.forEach(function(node) {
             newClassList.forEach(function(newClass) {
-                element.classlist.remove(newClass);
+                node.classlist.remove(newClass);
             });
         });
-    }
-
-    // TODO: 
-    Node.prototype.find = function(query) {
-        return this.querySelectorAll(query);
     }
 
     Node.prototype.ready = function(listener) {
@@ -111,9 +144,9 @@
         this.addEventListener(type, listener);
     }
 
-    NodeList.prototype.on = function(type, listener) {
-        this.forEach(function(element) {
-            element.addEventListener(type, listener);
+    Array.prototype.on = function(type, listener) {
+        this.forEach(function(node) {
+            node.addEventListener(type, listener);
         });
     }
 
@@ -121,15 +154,9 @@
         this.removeEventListener(type, listener);
     }
 
-    NodeList.prototype.off = function(type, listener) {
-        this.forEach(function(element) {
-            element.removeEventListener(type, listener);
-        });
-    }
-
-    NodeList.prototype.each = function(callBack) {
-        this.forEach(function(element) {
-            callBack.call(element);
+    Array.prototype.off = function(type, listener) {
+        this.forEach(function(node) {
+            node.removeEventListener(type, listener);
         });
     }
 
