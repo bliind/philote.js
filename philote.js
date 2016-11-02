@@ -15,9 +15,9 @@
 
     philote.nodeListToArray = function(nodeList) {
         var array = [];
-        nodeList.forEach(function(node) {
-            array.push(node);
-        });
+        for (var i = 0 ; i < nodeList.length ; i++) {
+            array.push(nodeList[i]);
+        }
 
         return array;
     }
@@ -76,9 +76,9 @@
     }
 
     Array.prototype.each = function(callback) {
-        this.forEach(function(node) {
-            callback.call(node);
-        });
+        for (var i = 0 ; i < this.length ; i++) {
+            callback.call(this[i]);
+        }
     }
 
     Node.prototype.find = function(query) {
@@ -90,14 +90,14 @@
     Array.prototype.find = function(query) {
         var results = [];
 
-        this.forEach(function(node) {
-            var newNodes = node.querySelectorAll(query);
-            newNodes.forEach(function(foundNode) {
-                if (results.indexOf(foundNode) === -1) {
-                    results.push(foundNode);
+        for (var i = 0 ; i < this.length ; i++) {
+            var newNodes = this[i].querySelectorAll(query);
+            for (var ii = 0 ; ii < newNodes.length ; ii++) {
+                if (results.indexOf(newNodes[ii]) === -1) {
+                    results.push(newNodes[ii]);
                 }
-            });
-        });
+            }
+        }
 
         return results;
     }
@@ -105,35 +105,35 @@
     Node.prototype.addClass = function(classes) {
         var node = this;
         var classesList = classes.split(' ');
-        classesList.forEach(function(newClass) {
-            node.classList.add(newClass);
-        });
+        for (var i = 0 ; i < classesList.length ; i++) {
+            node.classList.add(classesList[i]);
+        }
     }
 
     Array.prototype.addClass = function(newClasses) {
         var newClassList = newClasses.split(' ');
-        this.forEach(function(node) {
-            newClassList.forEach(function(newClass) {
-                node.classList.add(newClass);
-            });
-        });
+        for (var i = 0 ; i < this.length ; i++) {
+            for (var ii = 0 ; ii < newClassList.length ; ii++) {
+                this[i].classList.add(classesList[ii]);
+            }
+        }
     }
 
     Node.prototype.removeClass = function(newClasses) {
         var node = this;
-        var newClassList = newClasses.split(' ');
-        newClassList.forEach(function(newClass) {
-            node.classList.remove(newClass);
-        });
+        var classesList = classes.split(' ');
+        for (var i = 0 ; i < classesList.length ; i++) {
+            node.classList.remove(classesList[i]);
+        }
     }
 
     Array.prototype.removeClass = function(newClasses) {
         var newClassList = newClasses.split(' ');
-        this.forEach(function(node) {
-            newClassList.forEach(function(newClass) {
-                node.classlist.remove(newClass);
-            });
-        });
+        for (var i = 0 ; i < this.length ; i++) {
+            for (var ii = 0 ; ii < newClassList.length ; ii++) {
+                this[i].classList.remove(classesList[ii]);
+            }
+        }
     }
 
     Node.prototype.ready = function(listener) {
@@ -145,9 +145,9 @@
     }
 
     Array.prototype.on = function(type, listener) {
-        this.forEach(function(node) {
-            node.addEventListener(type, listener);
-        });
+        for (var i = 0 ; i < this.length ; i++) {
+            this[i].addEventListener(type, listener);
+        }
     }
 
     Node.prototype.off = function(type, listener) {
@@ -155,9 +155,9 @@
     }
 
     Array.prototype.off = function(type, listener) {
-        this.forEach(function(node) {
-            node.removeEventListener(type, listener);
-        });
+        for (var i = 0 ; i < this.length ; i++) {
+            this[i].removeEventListener(type, listener);
+        }
     }
 
     global.philote = philote;
