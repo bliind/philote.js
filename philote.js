@@ -150,8 +150,8 @@
     }
 
     Array.prototype.toggleClass = function(classes) {
-        var classesList = classes.split(' ');
         var nodeArray = this;
+        var classesList = classes.split(' ');
         for (var i = 0 ; i < classesList.length ; i++) {
             var regex = new RegExp(classesList[i]);
             for (var ii = 0; ii < nodeArray.length ; ii++) {
