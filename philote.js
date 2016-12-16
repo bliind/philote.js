@@ -136,6 +136,34 @@
         }
     }
 
+    Node.prototype.toggleClass = function(classes) {
+        var node = this;
+        var classesList = classes.split(' ');
+        for (var i = 0 ; i < classesList.length ; i++) {
+            var regex = new RegExp('\\b' + classesList[i] + '\\b');
+            if (regex.test(this.classList.value)) {
+                node.classList.remove(classesList[i]);
+            } else {
+                node.classList.add(classesList[i]);
+            }
+        }
+    }
+
+    Array.prototype.toggleClass = function(classes) {
+        var nodeArray = this;
+        var classesList = classes.split(' ');
+        for (var i = 0 ; i < classesList.length ; i++) {
+            var regex = new RegExp('\\b' + classesList[i] + '\\b');
+            for (var ii = 0; ii < nodeArray.length ; ii++) {
+                if (regex.test(nodeArray[ii].classList.value)) {
+                    nodeArray[ii].classList.remove(classesList[i]);
+                } else {
+                    nodeArray[ii].classList.add(classesList[i]);
+                }
+            }
+        }
+    }
+
     Node.prototype.ready = function(listener) {
         this.addEventListener('DOMContentLoaded', listener);
     }
