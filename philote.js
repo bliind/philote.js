@@ -25,9 +25,17 @@
     philote.parameterize = function(object) {
         var parameters = [];
         for (var property in object) {
-            var key = encodeURIComponent(property);
-            var value = encodeURIComponent(object[property]);
-            parameters.push(key + '=' + value);
+            if (object[property] instanceof Array) {
+                var key = encodeURIComponent(property);
+                for (i=0;i<object[property].length;i++) {
+                    var value = encodeURIComponent(object[property][i]);
+                    parameters.push(key + '[]=' + value);
+                }
+            } else {
+                var key = encodeURIComponent(property);
+                var value = encodeURIComponent(object[property]);
+                parameters.push(key + '=' + value);
+            }
         }
 
         var parametersString = parameters.join('&');
@@ -162,6 +170,19 @@
                 }
             }
         }
+    }
+
+    Node.prototype.parents = function(selector) {
+        var parent = this.parentNode;
+        while (null == parent.parentNode.querySelector(selector)) {
+            if ('#document' == parent.parentNode.nodeName) {
+                return undefined;
+            }
+
+            parent = parent.parentNode;
+        }
+
+        return parent;
     }
 
     Node.prototype.ready = function(listener) {
