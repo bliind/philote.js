@@ -1,6 +1,6 @@
 (function(global) {
     var philote = function(query) {
-        if (query.indexOf('#') === 0) {
+        if (/^#[a-zA-Z0-9_-]+$/.test(query.trim())) {
             var result = document.querySelector(query);
             if (result === null) {
                 console.error('Did not find node matching: ' + query);
