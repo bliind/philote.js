@@ -25,9 +25,17 @@
     philote.parameterize = function(object) {
         var parameters = [];
         for (var property in object) {
-            var key = encodeURIComponent(property);
-            var value = encodeURIComponent(object[property]);
-            parameters.push(key + '=' + value);
+            if (object[property] instanceof Array) {
+                var key = encodeURIComponent(property);
+                for (i=0;i<object[property].length;i++) {
+                    var value = encodeURIComponent(object[property][i]);
+                    parameters.push(key + '[]=' + value);
+                }
+            } else {
+                var key = encodeURIComponent(property);
+                var value = encodeURIComponent(object[property]);
+                parameters.push(key + '=' + value);
+            }
         }
 
         var parametersString = parameters.join('&');
