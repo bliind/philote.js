@@ -164,6 +164,19 @@
         }
     }
 
+    Node.prototype.parents = function(selector) {
+        var parent = this.parentNode;
+        while (null == parent.parentNode.querySelector(selector)) {
+            if ('#document' == parent.parentNode.nodeName) {
+                return undefined;
+            }
+
+            parent = parent.parentNode;
+        }
+
+        return parent;
+    }
+
     Node.prototype.ready = function(listener) {
         this.addEventListener('DOMContentLoaded', listener);
     }
