@@ -145,11 +145,10 @@
     }
 
     Node.prototype.toggleClass = function(classes) {
-        var node = this;
         var classesList = classes.split(' ');
+        var currentClasses = this.classesList.value.split(' ');
         for (var i = 0 ; i < classesList.length ; i++) {
-            var regex = new RegExp('\\b' + classesList[i] + '\\b');
-            if (regex.test(this.classList.value)) {
+            if (currentClasses.indexOf(classesList[i]) !== -1) {
                 node.classList.remove(classesList[i]);
             } else {
                 node.classList.add(classesList[i]);
@@ -158,18 +157,22 @@
     }
 
     Array.prototype.toggleClass = function(classes) {
-        var nodeArray = this;
-        var classesList = classes.split(' ');
-        for (var i = 0 ; i < classesList.length ; i++) {
-            var regex = new RegExp('\\b' + classesList[i] + '\\b');
-            for (var ii = 0; ii < nodeArray.length ; ii++) {
-                if (regex.test(nodeArray[ii].classList.value)) {
-                    nodeArray[ii].classList.remove(classesList[i]);
-                } else {
-                    nodeArray[ii].classList.add(classesList[i]);
-                }
+        this.each(function() {
+            this.toggleClass(classes);
+        });
+    }
+
+    Node.prototype.parents = function(selector) {
+        var parent = this.parentNode;
+        while (null == parent.parentNode.querySelector(selector)) {
+            if ('#document' == parent.parentNode.nodeName) {
+                return undefined;
             }
+
+            parent = parent.parentNode;
         }
+
+        return parent;
     }
 
     Node.prototype.parents = function(selector) {
